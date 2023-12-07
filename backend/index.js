@@ -4,6 +4,7 @@ import cors from "cors";
 import { db } from "./db.js";
 
 import authRoutes from "./routes/auth.js";
+import categoryRoutes from "./routes/Category.js";
 dotenv.config();
 
 const app = express();
@@ -12,6 +13,7 @@ app.use(express.json());
 
 
 app.use("/api/auth", authRoutes);
+app.use("/api/category", categoryRoutes);
 
 
 const PORT = process.env.PORT || 5000;
