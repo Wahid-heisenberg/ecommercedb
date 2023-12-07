@@ -8,7 +8,7 @@ export const CreateCategory = (req, res) => {
   try {
     if (!req.body.Name || !req.file) {
       return res.status(400).json("Please provide name and image.");
-    }
+    } 
 
     // Check if Category exists
     const checkCategoryQuery = "SELECT * FROM Categories WHERE Name = ?";
