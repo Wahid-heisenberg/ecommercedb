@@ -65,10 +65,6 @@ export const ShowCategoriesWithDetails = (req, res) => {
 export const ShowCategories = (req, res) => {
   try {
     const q = `SELECT * FROM categories `;
-  
-
-  
-  
 
     db.query(q, (err, data) => {
       if (err) return res.status(500).json(err);
