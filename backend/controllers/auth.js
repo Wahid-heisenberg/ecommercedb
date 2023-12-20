@@ -7,7 +7,8 @@ dotenv.config();
 
 export const register = (req, res) => {
   try {
-    console.log(req.body);
+    // console.log(req.body);
+    
     if (!req.body.Username || !req.body.User_Password || !req.body.Confirm_Password)
       return res.status(400).json("Please fill all fields.");
 

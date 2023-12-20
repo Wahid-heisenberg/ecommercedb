@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 const router = express.Router();
+router.get("/getproduct/:id", ShowProduct);///fix this route
 router.post("/create", upload.any("files"), CreateProduct);
-router.get("/getproduct/:id", ShowProduct);///fix this 
 router.get("/get/:page", ShowProducts).get("/get", ShowProducts)
 export default router;

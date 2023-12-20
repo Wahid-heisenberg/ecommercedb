@@ -1,7 +1,10 @@
 import { db } from "../db.js";
 import dotenv from "dotenv";
 import { organizeCategories } from "../helpers/organizeCategories.js";
-import { checkCategoryExistence ,updateCategoryInDatabase } from "../helpers/Category.js";
+import {
+  checkCategoryExistence,
+  updateCategoryInDatabase,
+} from "../helpers/Category.js";
 dotenv.config();
 
 export const CreateCategory = (req, res) => {
@@ -42,14 +45,9 @@ export const CreateCategory = (req, res) => {
   }
 };
 
-
 export const ShowCategoriesWithDetails = (req, res) => {
   try {
     const q = `SELECT c.Category_ID AS Category_ID, c.Name AS Category_Name, c.Description AS Description, c.Image AS Category_Image, sc.Sub_Category_ID, sc.Name, sc.Description AS Sub_Category_Description  , sc.Image AS Sub_Category_Image  , c.Category_ID AS Mother_Category FROM Categories c LEFT JOIN sub_categories sc ON c.Category_ID = sc.Mother_Category ORDER BY c.Category_ID, sc.Sub_Category_ID;`;
-  
-
-  
-  
 
     db.query(q, (err, data) => {
       if (err) return res.status(500).json(err);
@@ -93,7 +91,6 @@ export const ShowCategory = (req, res) => {
   }
 };
 
-
 export const updateCategory = (req, res) => {
   try {
     // Validate request parameters
@@ -130,11 +127,8 @@ export const updateCategory = (req, res) => {
   }
 };
 
-
-
 export const deleteCategory = (req, res) => {
   try {
-
     //Check if Category exists
     const q = "SELECT * FROM Categories WHERE  Category_ID = ?";
 
@@ -153,8 +147,6 @@ export const deleteCategory = (req, res) => {
     console.log(error);
   }
 };
-
-
 
 export const deleteALLCategories = (req, res) => {
   try {
