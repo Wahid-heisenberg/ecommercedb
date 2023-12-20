@@ -1,17 +1,19 @@
 import express from "express";
 import multer from "multer";
-import { CreateProduct , ShowProducts } from "../controllers/Product.js"; 
+import { CreateProduct, ShowProducts, ShowProduct } from "../controllers/Product.js";
+
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, "../frontend/public/images/");
-    },
-    filename: function (req, file, cb) {
-      cb(null, Date.now()+"--"+ file.originalname);
-    },
-  });
-  const upload = multer({ storage });
+  destination: function (req, file, cb) {
+    cb(null, "../frontend/public/images/");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "--" + file.originalname);
+  },
+});
+const upload = multer({ storage });
 
 const router = express.Router();
-router.post("/create",upload.single("file"), CreateProduct);
-router.get("/get", ShowProducts);
-export default router
+router.post("/create", upload.any("files"), CreateProduct);
+router.get("/getproduct/:id", ShowProduct);///fix this 
+router.get("/get/:page", ShowProducts).get("/get", ShowProducts)
+export default router;

@@ -18,6 +18,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/category", categoryRoutes);
 app.use("/api/SubCategory", SubCategoryRoutes);
 app.use("/api/product", ProductRoutes);
+
+
 const PORT = process.env.PORT || 5000;
 
 db.connect((err) => {
