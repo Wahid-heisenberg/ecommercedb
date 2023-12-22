@@ -46,7 +46,7 @@ export const CreateProduct = async (req, res) => {
         const productId = data.insertId;
 
         const createProductImageQuery =
-          "INSERT INTO Product_Images (Product_ID, 	Image_URL) VALUES (?, ?)";
+          "INSERT INTO Product_Images (	ProductID, 	Image_URL) VALUES (?, ?)";
         const images = req.files;
         for (let i = 0; i < images.length; i++) {
           images[i] = [productId, images[i].path];
@@ -76,7 +76,7 @@ export const ShowProducts = (req, res) => {
     const offset = (page - 1) * itemsPerPage;
 
     const q =
-      "SELECT * FROM Products join Product_Images on Products.Product_ID = Product_Images.Product_ID  LIMIT ?, ?  ";
+      "SELECT * FROM Products join Product_Images on Products.ProductID = Product_Images.Product_ID LIMIT ?, ?  ";
     const values = [offset, itemsPerPage];
 
     db.query(q, values, (err, data) => {
@@ -106,7 +106,7 @@ export const ShowProduct = (req, res) => {
     if (!req.query.id) {
       return res.status(400).json("Please provide the required product.");
     }
-    const q = "SELECT * FROM Products WHERE Product_ID = ? join Product_Images on Products.Product_ID = Product_Images.Product_ID";
+    const q = "SELECT * FROM Products WHERE 	ProductID = ? join Product_Images on Products.ProductID = Product_Images.ProductID";
 
     db.query(q, [req.query.id], (err, data) => {
       if (err) return res.status(500).json(err);

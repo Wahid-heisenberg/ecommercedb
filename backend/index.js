@@ -2,7 +2,6 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import { db } from "./db.js";
-
 import authRoutes from "./routes/auth.js";
 import categoryRoutes from "./routes/Category.js";
 import SubCategoryRoutes from "./routes/SubCategory.js";
