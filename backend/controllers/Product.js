@@ -8,8 +8,8 @@ export const CreateProduct = async (req, res) => {
     if (
       !req.body.Name ||
       !req.body.Price ||
-      !req.body.Category_ID ||
-      !req.body.Sub_Category_ID
+      !req.query.Category_ID ||
+      !req.query.Sub_Category_ID
     ) {
       return res.status(400).json("Please provide All required credentiels.");
     }
@@ -24,7 +24,7 @@ export const CreateProduct = async (req, res) => {
       if (data.length > 0) {
         return res.status(409).json("Product already exists!");
       }
-      console.log(req.file);
+      console.log(req.files)
 
       // Extract the file path
       // const imagePath = req.file.path;
@@ -35,8 +35,8 @@ export const CreateProduct = async (req, res) => {
         req.body.Name,
         req.body.Description,
         req.body.Price,
-        req.body.Category_ID,
-        req.body.Sub_Category_ID,
+        req.query.Category_ID,
+        req.query.Sub_Category_ID,
       ];
 
       db.query(createProductQuery, values, (err, data) => {
@@ -45,20 +45,26 @@ export const CreateProduct = async (req, res) => {
         }
         const productId = data.insertId;
 
-        const createProductImageQuery =
-          "INSERT INTO Product_Images (	ProductID, 	Image_URL) VALUES (?, ?)";
+        const createProductImageQuery = "INSERT INTO Product_Images (Product_ID, Image_URL) VALUES (?, ?)";
         const images = req.files;
+        let imagesInserted = 0;
+
         for (let i = 0; i < images.length; i++) {
           images[i] = [productId, images[i].path];
           db.query(createProductImageQuery, images[i], (err, data) => {
             if (err) {
-              return res.status(500).json("Database error: " + err);
+              console.error("Database error: " + err);
             }
-            return res.status(200).json("Product images  have been inserted .");
+            imagesInserted++;
+            if (imagesInserted === images.length) {
+              console.log(imagesInserted + " images have been inserted");
+              return res.status(200).json("Product has been created.");
+            }
           });
+        
         }
 
-        return res.status(200).json("Product has been created .");
+        
       });
     });
   } catch (error) {
@@ -102,21 +108,21 @@ export const ShowProducts = (req, res) => {
 
 export const ShowProduct = (req, res) => {
   try {
-    console.log(req.query.id);
-    if (!req.query.id) {
+    if (!req.params.id) {
       return res.status(400).json("Please provide the required product.");
     }
-    const q = "SELECT * FROM Products WHERE 	ProductID = ? join Product_Images on Products.ProductID = Product_Images.ProductID";
+    const q = "SELECT * FROM Products JOIN Product_Images ON Products.ProductID = Product_Images.Product_ID WHERE Products.ProductID = ?";
 
-    db.query(q, [req.query.id], (err, data) => {
+    db.query(q, [req.params.id], (err, data) => {
       if (err) return res.status(500).json(err);
       if (data.length === 0)
         return res.status(200).json("There is no Product!");
 
-      return res.status(200).json(data);
+      return res.status(200).json(organizeProducts(data));
     });
   } catch (error) {
     console.log(error);
   }
 };
+
 

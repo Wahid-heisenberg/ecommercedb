@@ -26,3 +26,6 @@ export function organizeProducts(result) {
   
     return organizedResult;
   }
+
+
+
