@@ -1,7 +1,5 @@
 import { db } from "../db.js";
 
-
-
 // Function to create a new rating
 export const createRating = (req, res) => {
     const  User_ID  = req.params.userId ;
