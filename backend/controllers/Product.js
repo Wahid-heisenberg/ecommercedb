@@ -82,8 +82,16 @@ export const ShowProducts = (req, res) => {
 
     const offset = (page - 1) * itemsPerPage;
 
-    const q =
-      "SELECT * FROM Products join Product_Images on Products.ProductID = Product_Images.Product_ID LIMIT ?, ?  ";
+    // const q =
+    //   "SELECT * FROM Products join Product_Images on Products.ProductID = Product_Images.Product_ID LIMIT ?, ?  ";
+    const q = `
+    SELECT Products.*, Product_Images.*, AVG(Ratings.Stars_Number) as AverageStars
+    FROM Products 
+    JOIN Product_Images ON Products.ProductID = Product_Images.Product_ID
+    LEFT JOIN Ratings ON Products.ProductID = Ratings.Product_ID
+    GROUP BY Products.ProductID
+    LIMIT ?, ?
+  `;
     const values = [offset, itemsPerPage];
 
     db.query(q, values, (err, data) => {

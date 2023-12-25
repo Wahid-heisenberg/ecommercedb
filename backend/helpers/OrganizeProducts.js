@@ -13,6 +13,7 @@ export function organizeProducts(result) {
           Description: row.Description,
           OldPrice :row.OldPrice ,
           Price :row.Price,
+          AverageStars : row.AverageStars,
         //   product_Image: row.product_Image,
           Images: []
         };
