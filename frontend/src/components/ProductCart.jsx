@@ -1,5 +1,6 @@
 import React from "react";
 import CartIcon from "../assets/CartIcon";
+import StarsRating from "./StarsRating.jsx";
 const ProductCart = ({ products }) => {
   return (
     <div className="grid grid-cols-5  gap-4 p-16 ">
@@ -30,7 +31,11 @@ const ProductCart = ({ products }) => {
             {product.OldPrice && product.OldPrice !== product.Price && (
               <span>{product.OldPrice}</span>
             )}
+
           </div>
+          { product.AverageStars &&
+               <StarsRating rating={product.AverageStars} />
+            }
         </div>
       ))}
     </div>
