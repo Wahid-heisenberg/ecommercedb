@@ -1,7 +1,7 @@
 import { db } from "../db.js";
 
 export const checkSubCategoryExistence = (SubCategoryID, res, callback) => {
-    const query = "SELECT * FROM Sub_Categories WHERE  Sub_Category_ID = ?";
+    const query = "SELECT * FROM sub_Categories WHERE  Sub_Category_ID = ?";
     db.query(query, [SubCategoryID], (err, data) => {
       if (err) {
         return res.status(500).json(err);
@@ -19,7 +19,7 @@ export const checkSubCategoryExistence = (SubCategoryID, res, callback) => {
     const setClause = Object.keys(updateFields).map((key) => `${key} = ?`).join(', ');
     const values = Object.values(updateFields);
     
-    const query = `UPDATE Sub_Categories SET ${setClause} WHERE Sub_Category_ID = ?`;
+    const query = `UPDATE sub_Categories SET ${setClause} WHERE Sub_Category_ID = ?`;
     values.push(SubCategoryID);
   
     db.query(query, values, (err, data) => {

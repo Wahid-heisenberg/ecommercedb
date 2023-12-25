@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import {
   checkSubCategoryExistence,
   updateSubCategoryInDatabase,
-} from "../helpers/SubCAtegory.js";
+} from "../helpers/SubCategory.js";
 dotenv.config();
 
 export const CreateSubCategory = async (req, res) => {
@@ -30,7 +30,7 @@ export const CreateSubCategory = async (req, res) => {
       } else {
         // Check if Category exists
         const checkCategoryQuery =
-          "SELECT * FROM Categories WHERE Category_ID  = ?";
+          "SELECT * FROM categories WHERE Category_ID  = ?";
 
         db.query(
           checkCategoryQuery,

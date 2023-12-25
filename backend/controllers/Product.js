@@ -15,7 +15,7 @@ export const CreateProduct = async (req, res) => {
     }
 
     // Check if Category exists
-    const checkProductyQuery = "SELECT * FROM Products WHERE Name = ?";
+    const checkProductyQuery = "SELECT * FROM products WHERE Name = ?";
 
     db.query(checkProductyQuery, [req.body.Name], (err, data) => {
       if (err) {
@@ -30,7 +30,7 @@ export const CreateProduct = async (req, res) => {
       // const imagePath = req.file.path;
       // Insert the new category with the image path
       const createProductQuery =
-        "INSERT INTO Products(`Name`, `Description`, `Price`,`OldPrice`,`Category_ID`, `Sub_Category_ID`) VALUES (?, ?, ?, ?  ,? , ?) ";
+        "INSERT INTO products(`Name`, `Description`, `Price`,`OldPrice`,`Category_ID`, `Sub_Category_ID`) VALUES (?, ?, ?, ?  ,? , ?) ";
       const values = [
         req.body.Name,
         req.body.Description,
@@ -46,7 +46,7 @@ export const CreateProduct = async (req, res) => {
         }
         const productId = data.insertId;
 
-        const createProductImageQuery = "INSERT INTO Product_Images (Product_ID, Image_URL) VALUES (?, ?)";
+        const createProductImageQuery = "INSERT INTO product_images (Product_ID, Image_URL) VALUES (?, ?)";
         const images = req.files;
         let imagesInserted = 0;
 
@@ -83,7 +83,7 @@ export const ShowProducts = (req, res) => {
     const offset = (page - 1) * itemsPerPage;
 
     const q =
-      "SELECT * FROM Products join Product_Images on Products.ProductID = Product_Images.Product_ID LIMIT ?, ?  ";
+      "SELECT * FROM products join product_images on products.ProductID = product_images.Product_ID LIMIT ?, ?  ";
     const values = [offset, itemsPerPage];
 
     db.query(q, values, (err, data) => {
@@ -112,7 +112,7 @@ export const ShowProduct = (req, res) => {
     if (!req.params.id) {
       return res.status(400).json("Please provide the required product.");
     }
-    const q = "SELECT * FROM Products JOIN Product_Images ON Products.ProductID = Product_Images.Product_ID WHERE Products.ProductID = ?";
+    const q = "SELECT * FROM products JOIN product_images ON products.ProductID = product_images.Product_ID WHERE products.ProductID = ?";
 
     db.query(q, [req.params.id], (err, data) => {
       if (err) return res.status(500).json(err);
@@ -275,61 +275,61 @@ export const UpdateProduct = async (req, res) => {
     };
 
     // Check if the product exists in the database
-    const productData = await dbQuery("SELECT * FROM Products WHERE ProductID = ?", [id]);
+    const productData = await dbQuery("SELECT * FROM products WHERE ProductID = ?", [id]);
     if (productData.length === 0) {
       return res.status(404).json("Product not found!");
     }
 
     // Update the Name if provided and it doesn't exist in the database
     if (Name && Name !== productData[0].Name) {
-      const nameData = await dbQuery("SELECT * FROM Products WHERE Name = ?", [Name]);
+      const nameData = await dbQuery("SELECT * FROM products WHERE Name = ?", [Name]);
       if (nameData.length > 0) {
         return res.status(400).json("Name already exists!");
       }
-      await dbQuery("UPDATE Products SET Name = ? WHERE ProductID = ?", [Name, id]);
+      await dbQuery("UPDATE products SET Name = ? WHERE ProductID = ?", [Name, id]);
     }
 
     // Update the Description if provided
     if (Description) {
-      await dbQuery("UPDATE Products SET Description = ? WHERE ProductID = ?", [Description, id]);
+      await dbQuery("UPDATE products SET Description = ? WHERE ProductID = ?", [Description, id]);
     }
 
     // Update the Sub_Category_ID if provided
     if (Sub_Category_ID) {
-      const subCategoryData = await dbQuery("SELECT * FROM Subcategories WHERE Sub_Category_ID = ?", [Sub_Category_ID]);
+      const subCategoryData = await dbQuery("SELECT * FROM subcategories WHERE Sub_Category_ID = ?", [Sub_Category_ID]);
       if (subCategoryData.length === 0) {
         return res.status(404).json("Subcategory not found!");
       }
-      await dbQuery("UPDATE Products SET Sub_Category_ID = ? WHERE ProductID = ?", [Sub_Category_ID, id]);
+      await dbQuery("UPDATE products SET Sub_Category_ID = ? WHERE ProductID = ?", [Sub_Category_ID, id]);
     }
 
     // Update the Category_ID if provided
     if (Category_ID) {
-      const categoryData = await dbQuery("SELECT * FROM Categories WHERE Category_ID = ?", [Category_ID]);
+      const categoryData = await dbQuery("SELECT * FROM categories WHERE Category_ID = ?", [Category_ID]);
       if (categoryData.length === 0) {
         return res.status(404).json("Category not found!");
       }
-      await dbQuery("UPDATE Products SET Category_ID = ? WHERE ProductID = ?", [Category_ID, id]);
+      await dbQuery("UPDATE products SET Category_ID = ? WHERE ProductID = ?", [Category_ID, id]);
     }
 
     // Update the Price if provided
     if (Price) {
-      await dbQuery("UPDATE Products SET Price = ? WHERE ProductID = ?", [Price, id]);
+      await dbQuery("UPDATE products SET Price = ? WHERE ProductID = ?", [Price, id]);
     }
 
     // Update the OldPrice if provided
     if (OldPrice) {
-      await dbQuery("UPDATE Products SET OldPrice = ? WHERE ProductID = ?", [OldPrice, id]);
+      await dbQuery("UPDATE products SET OldPrice = ? WHERE ProductID = ?", [OldPrice, id]);
     }
 
     // Update the images if provided
 // Update the images if provided
 if (images && images.length > 0) {
-  await dbQuery("DELETE FROM Product_Images WHERE Product_ID = ?", [id]);
+  await dbQuery("DELETE FROM product_Images WHERE Product_ID = ?", [id]);
   const imageValues = images.map((image) => [id, image.path]);
   const placeholders = imageValues.map(() => '(?, ?)').join(', ');
   const flatValues = [].concat(...imageValues);
-  await dbQuery(`INSERT INTO Product_Images (Product_ID, Image_URL) VALUES ${placeholders}`, flatValues);
+  await dbQuery(`INSERT INTO product_Images (Product_ID, Image_URL) VALUES ${placeholders}`, flatValues);
 }
 
     return res.status(200).json("Product updated successfully!");
@@ -344,12 +344,12 @@ export const DeleteProduct = async (req, res) => {
     const { id } = req.params;
 
     // Delete the product
-    const deleteProductQuery = "DELETE FROM Products WHERE ProductID = ?";
+    const deleteProductQuery = "DELETE FROM products WHERE ProductID = ?";
     db.query(deleteProductQuery, [id], (err) => {
       if (err) return res.status(500).json(err);
 
       // Delete the product images
-      const deleteImagesQuery = "DELETE FROM Product_Images WHERE Product_ID = ?";
+      const deleteImagesQuery = "DELETE FROM product_Images WHERE Product_ID = ?";
       db.query(deleteImagesQuery, [id], (err) => {
         if (err) return res.status(500).json(err);
 

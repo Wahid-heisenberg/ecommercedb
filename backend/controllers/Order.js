@@ -8,7 +8,7 @@ export const CreateOrder = async (req, res) => {
   try {
     const { Client_ID, Order_Products } = req.body;
     const checkClientQuery = `
-    SELECT User_ID FROM Users WHERE User_ID = ?;
+    SELECT User_ID FROM users WHERE User_ID = ?;
 `;
     const [clientResult] = await db
       .promise()
@@ -24,7 +24,7 @@ export const CreateOrder = async (req, res) => {
     // Check if the order products exist in the products table
     const productIds = Order_Products.map((product) => product.Product_ID);
     const checkProductsQuery = `
-    SELECT ProductID FROM Products WHERE ProductID IN (?); ;
+    SELECT ProductID FROM products WHERE ProductID IN (?); ;
 `;
 
     const [productsResult] = await db
@@ -95,9 +95,9 @@ export const GetAllOrders = async (req, res) => {
     // Get all orders with their assigned products and users
     const getAllOrdersQuery = `
             SELECT O.Order_ID, O.Order_Date, O.Order_Status, O.Client_ID,  OP.Product_ID, OP.Quantity
-            FROM Orders O
-            INNER JOIN Users U ON O.Client_ID = U.User_ID
-            INNER JOIN Order_Products OP ON O.Order_ID = OP.Order_ID;
+            FROM orders O
+            INNER JOIN users U ON O.Client_ID = U.User_ID
+            INNER JOIN order_products OP ON O.Order_ID = OP.Order_ID;
         `;
     const [ordersResult] = await db.promise().query(getAllOrdersQuery);
     const orders = ordersResult.map((order) => ({
@@ -121,9 +121,9 @@ export const GetOrder = async (req, res) => {
     // Get the order with the specified order ID
     const getOrderQuery = `
       SELECT O.Order_ID, O.Order_Date, O.Order_Status, O.Client_ID,  OP.Product_ID, OP.Quantity
-      FROM Orders O
-      INNER JOIN Users U ON O.Client_ID = U.User_ID
-      INNER JOIN Order_Products OP ON O.Order_ID = OP.Order_ID
+      FROM orders O
+      INNER JOIN users U ON O.Client_ID = U.User_ID
+      INNER JOIN order_products OP ON O.Order_ID = OP.Order_ID
       WHERE O.Order_ID = ?;
     `;
     const [orderResult] = await db.promise().query(getOrderQuery, [req.params.Order_ID]);
@@ -154,7 +154,7 @@ export const DeleteOrder = async (req, res) => {
   try {
     // Delete the order from the Orders table
     const deleteOrderQuery = `
-      DELETE FROM Orders WHERE Order_ID = ?;
+      DELETE FROM orders WHERE Order_ID = ?;
     `;
     await db.promise().query(deleteOrderQuery, [req.params.Order_ID]);
 

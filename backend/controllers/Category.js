@@ -130,13 +130,13 @@ export const updateCategory = (req, res) => {
 export const deleteCategory = (req, res) => {
   try {
     //Check if Category exists
-    const q = "SELECT * FROM Categories WHERE  Category_ID = ?";
+    const q = "SELECT * FROM categories WHERE  Category_ID = ?";
 
     db.query(q, [req.params.id], (err, data) => {
       if (err) return res.status(500).json(err);
       if (data.length === 0) return res.status(409).json("Category not found!");
 
-      const q = "DELETE FROM Categories WHERE Category_ID = ?";
+      const q = "DELETE FROM categories WHERE Category_ID = ?";
 
       db.query(q, [req.params.id], (err, data) => {
         if (err) return res.status(500).json("Database error :<br/>" + err);
@@ -150,7 +150,7 @@ export const deleteCategory = (req, res) => {
 
 export const deleteALLCategories = (req, res) => {
   try {
-    const q = "DELETE FROM Categories";
+    const q = "DELETE FROM categories";
 
     db.query(q, (err, data) => {
       if (err) return res.status(500).json("Database error: " + err);

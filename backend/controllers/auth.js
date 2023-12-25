@@ -7,7 +7,7 @@ dotenv.config();
 
 export const register = (req, res) => {
   try {
-    // console.log(req.body);
+    console.log(req.body);
     
     if (!req.body.Username || !req.body.User_Password || !req.body.Confirm_Password)
       return res.status(400).json("Please fill all fields.");
@@ -31,7 +31,7 @@ export const register = (req, res) => {
       const salt = bcrypt.genSaltSync(10);
       const hash = bcrypt.hashSync(req.body.User_Password, salt);
 
-      const q = "INSERT INTO Users(`Username`,`User_Password`) VALUES (?)";
+      const q = "INSERT INTO users(`Username`,`User_Password`) VALUES (?)";
       const values = [req.body.Username, hash];
 
       db.query(q, [values], (err, data) => {

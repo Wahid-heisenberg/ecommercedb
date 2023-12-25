@@ -19,7 +19,7 @@ export const checkCategoryExistence = (categoryId, res, callback) => {
     const setClause = Object.keys(updateFields).map((key) => `${key} = ?`).join(', ');
     const values = Object.values(updateFields);
     
-    const query = `UPDATE Categories SET ${setClause} WHERE Category_ID = ?`;
+    const query = `UPDATE categories SET ${setClause} WHERE Category_ID = ?`;
     values.push(categoryId);
   
     db.query(query, values, (err, data) => {
