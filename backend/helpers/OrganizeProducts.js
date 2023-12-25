@@ -11,6 +11,8 @@ export function organizeProducts(result) {
           product_ID: row.Product_ID,
           product_Name: row.Name,
           Description: row.Description,
+          OldPrice :row.OldPrice ,
+          Price :row.Price,
         //   product_Image: row.product_Image,
           Images: []
         };

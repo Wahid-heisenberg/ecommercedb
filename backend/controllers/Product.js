@@ -106,7 +106,6 @@ export const ShowProducts = (req, res) => {
   }
 };
 
-
 export const ShowProduct = (req, res) => {
   try {
     if (!req.params.id) {
@@ -125,135 +124,6 @@ export const ShowProduct = (req, res) => {
     console.log(error);
   }
 };
-
-
-// export const UpdateProduct = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const { Name, Price, OldPrice} = req.body;
-//     const { Sub_Category_ID, Category_ID , Description} = req.query
-//     const images = req.files;
-
-//     console.log(req.files  )
-//     // Check if the product exists in the database
-//     const checkProductQuery = "SELECT * FROM Products WHERE ProductID = ?";
-//     db.query(checkProductQuery, [id], (err, productData) => {
-//       if (err) return res.status(500).json(err);
-//       if (productData.length === 0) {
-//         return res.status(404).json("Product not found!");
-//       }
-
-//       // Update the Name if provided and it doesn't exist in the database
-//       if (Name && Name !== productData[0].Name) {
-//         const checkNameQuery = "SELECT * FROM Products WHERE Name = ?";
-//         db.query(checkNameQuery, [Name], (err, nameData) => {
-//           if (err) return res.status(500).json(err);
-//           if (nameData.length > 0) {
-//             return res.status(400).json("Name already exists!");
-//           }
-
-//           // Update the Name in the database
-//           const updateNameQuery = "UPDATE Products SET Name = ? WHERE ProductID = ?";
-//           db.query(updateNameQuery, [Name, id], (err) => {
-//             if (err) return res.status(500).json(err);
-//           });
-//         });
-//       }
-
-//       // Update the Description if provided
-//       if (Description) {
-//         const updateDescriptionQuery = "UPDATE Products SET Description = ? WHERE ProductID = ?";
-//         db.query(updateDescriptionQuery, [Description, id], (err) => {
-//           if (err) return res.status(500).json(err);
-//         });
-//       }
-
-//       // Update the Sub_Category_ID if provided
-//       if (Sub_Category_ID) {
-//         // Check if the subcategory exists in the database
-//         const checkSubCategoryQuery = "SELECT * FROM Subcategories WHERE Sub_Category_ID = ?";
-//         db.query(checkSubCategoryQuery, [Sub_Category_ID], (err, subCategoryData) => {
-//           if (err) return res.status(500).json(err);
-//           if (subCategoryData.length === 0) {
-//             return res.status(404).json("Subcategory not found!");
-//           }
-
-//           const updateSubCategoryQuery = "UPDATE Products SET Sub_Category_ID = ? WHERE ProductID = ?";
-//           db.query(updateSubCategoryQuery, [Sub_Category_ID, id], (err) => {
-//             if (err) return res.status(500).json(err);
-//           });
-//         });
-//       }
-
-//       if (Category_ID) {
-//         // Check if the category exists in the database
-//         const checkCategoryQuery = "SELECT * FROM Categories WHERE Category_ID = ?";
-//         db.query(checkCategoryQuery, [Category_ID], (err, categoryData) => {
-//           if (err) return res.status(500).json(err);
-//           if (categoryData.length === 0) {
-//             return res.status(404).json("Category not found!");
-//           }
-
-//           const updateCategoryQuery = "UPDATE Products SET Category_ID = ? WHERE ProductID = ?";
-//           db.query(updateCategoryQuery, [Category_ID, id], (err) => {
-//             if (err) return res.status(500).json(err);
-//           });
-//         });
-//       }
-//       if (Sub_Category_ID) {
-//         const updateSubCategoryQuery = "UPDATE Products SET Sub_Category_ID = ? WHERE ProductID = ?";
-//         db.query(updateSubCategoryQuery, [Sub_Category_ID, id], (err) => {
-//           if (err) return res.status(500).json(err);
-//         });
-//       }
-
-//       // Update the Category_ID if provided
-//       if (Category_ID) {
-//         const updateCategoryQuery = "UPDATE Products SET Category_ID = ? WHERE ProductID = ?";
-//         db.query(updateCategoryQuery, [Category_ID, id], (err) => {
-//           if (err) return res.status(500).json(err);
-//         });
-//       }
-
-//       // Update the Price if provided
-//       if (Price) {
-//         const updatePriceQuery = "UPDATE Products SET Price = ? WHERE ProductID = ?";
-//         db.query(updatePriceQuery, [Price, id], (err) => {
-//           if (err) return res.status(500).json(err);
-//         });
-//       }
-
-//       // Update the OldPrice if provided
-//       if (OldPrice) {
-//         const updateOldPriceQuery = "UPDATE Products SET OldPrice = ? WHERE ProductID = ?";
-//         db.query(updateOldPriceQuery, [OldPrice, id], (err) => {
-//           if (err) return res.status(500).json(err);
-//         });
-//       }
-
-//       // Update the images if provided
-//       if (images) {
-//         // Delete existing images for the product
-//         const deleteImagesQuery = "DELETE FROM Product_Images WHERE Product_ID = ?";
-//         db.query(deleteImagesQuery, [id], (err) => {
-//           if (err) return res.status(500).json(err);
-
-//           // Insert new images for the product
-//           const insertImagesQuery = "INSERT INTO Product_Images (Product_ID, Image_URL) VALUES ?";
-//           const imageValues = images.map((image) => [id, image.path]);
-//           db.query(insertImagesQuery, [imageValues], (err) => {
-//             if (err) return res.status(500).json(err);
-//           });
-//         });
-//       }
-
-//       return res.status(200).json("Product updated successfully!");
-//     });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-
 
 export const UpdateProduct = async (req, res) => {
   try {
@@ -360,3 +230,5 @@ export const DeleteProduct = async (req, res) => {
     console.log(error);
   }
 };
+
+
