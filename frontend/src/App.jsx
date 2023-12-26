@@ -4,6 +4,7 @@ import NavBar from './components/NavBar'
 import ProductCart from './components/ProductCart'
 import { useEffect } from 'react';
 import axios from 'axios';
+import Cart from './components/Cart';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -16,7 +17,7 @@ function App() {
         setProducts(response.data.products);
         setPage(response.data.page)
         setLoading(false);
-        console.log(response.data.products)
+      
       } catch (error) {
         console.error(error);
       }
@@ -29,14 +30,16 @@ function App() {
     <div className='m-0 p-0 flex flex-col '>
       <Head />
       <NavBar />
-      {loading ? (
+      {/* {loading ? (
         <p>Loading...</p>
       ) : (
         <div>
           <ProductCart  products={products} />
 
       </div>
-      )}
+      )} */}
+
+      <Cart/>
     </div>
   );
 }

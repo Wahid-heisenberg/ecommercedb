@@ -114,6 +114,25 @@ export const ShowProducts = (req, res) => {
   }
 };
 
+export const ShowProductsByIds = (req, res) => {
+  try {
+    console.log(req.body)
+    if (!req.body.ids || !Array.isArray(req.body.ids)) {
+      return res.status(400).json("Please provide an array of product IDs.");
+    }
+    const q = "SELECT * FROM Products JOIN Product_Images ON Products.ProductID = Product_Images.Product_ID WHERE Products.ProductID IN (?)";
+
+    db.query(q, [req.body.ids], (err, data) => {
+      if (err) return res.status(500).json(err);
+      if (data.length === 0)
+        return res.status(200).json("There are no products with the given IDs!");
+
+      return res.status(200).json(organizeProducts(data));
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 export const ShowProduct = (req, res) => {
   try {
     if (!req.params.id) {
@@ -132,6 +151,8 @@ export const ShowProduct = (req, res) => {
     console.log(error);
   }
 };
+
+
 
 export const UpdateProduct = async (req, res) => {
   try {
