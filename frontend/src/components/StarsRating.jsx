@@ -1,6 +1,6 @@
 import React from "react";
 
-const StarsRating = ({ rating }) => {
+const StarsRating = ({ rating ,scale}) => {
   const starPath =
     "M10 15.27L16.18 21l-1.64-7.03L22 9.24l-7.19-.61L10 2 7.19 8.63 0 9.24l5.46 4.73L3.82 21z";
   const filledStars = Array.from({ length: Math.floor(rating) }, (_, index) => (
@@ -42,7 +42,7 @@ const StarsRating = ({ rating }) => {
   );
 
   return (
-    <div className="flex items-center">
+    <div className={`flex items-center ${scale}`}>
       {filledStars}
       {halfStar}
       {emptyStars}

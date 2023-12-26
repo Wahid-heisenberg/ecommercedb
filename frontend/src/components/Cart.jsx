@@ -3,8 +3,9 @@ import axios from "axios";
 const Cart = () => {
   const [loading, setLoading] = useState(true);
   const [cartItems, setCartItems] = useState([]);
-  const [deliveryPrice, setDeliveryPrice] = useState(0);
+  const [deliveryPrice, setDeliveryPrice] = useState(455);
   const [cartIds, setCartIds] = useState([]);
+
   useEffect(() => {
     // Get cart ids from local storage
     const storedCartIds = localStorage.getItem("cart");
@@ -23,7 +24,12 @@ const Cart = () => {
               ids: cartIds,
             }
           );
-          setCartItems(response.data);
+          const items = await Promise.all(
+            response.data.map(async (item) => {
+              return { ...item, quantity: 1 };
+            })
+          );
+          setCartItems(items);
           console.log(response.data);
           setLoading(false);
         } catch (error) {
@@ -68,44 +74,54 @@ const Cart = () => {
           Cart
         </span>
       </h1>
-      <table className="table-auto w-full">
-        <thead>
-          <tr>
-            <th className="px-4 py-2 text-left">Product</th>
-            <th className="px-4 py-2 text-left  ">Price</th>
-            <th className="px-4 py-2 text-left ">Quantity</th>
-            <th className="px-4 py-2 text-left ">Subtotal</th>
-          </tr>
-        </thead>
-        <tbody>
-          {cartItems.map((item) => (
-            <tr key={item.product_ID}>
-              <td className=" flex px-4 py-2 gap-2">
-                <img
-                  className="w-16 h-8"
-                  src={item.Images[0].Image_URL.slice(18)}
-                  alt=""
-                />{" "}
-                <span>{item.product_Name}</span>
-              </td>
-              <td className=" px-4 py-2">{item.Price} DA</td>
-              <td className=" px-4 py-2">
-                <input
-                  type="number"
-                  value={item.quantity || 1}
-                  onChange={(e) =>
-                    updateQuantity(item.product_ID, e.target.value)
-                  }
-                  className="w-16 border-2 text-center"
-                />
-              </td>
-              <td className=" px-4 py-2">
-                {item.Price * item.quantity || item.Price}
-              </td>
+      {cartItems.length > 0 ? (
+        <table className="table-auto w-full">
+          <thead>
+            <tr>
+              <th className="px-4 py-2 text-left">Product</th>
+              <th className="px-4 py-2 text-left  ">Price</th>
+              <th className="px-4 py-2 text-left ">Quantity</th>
+              <th className="px-4 py-2 text-left ">Subtotal</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {cartItems.map((item) => (
+              <tr key={item.product_ID}>
+                <td className=" flex px-4 py-2 gap-2">
+                  <img
+                    className="w-16 h-8"
+                    src={item.Images[0].Image_URL.slice(18)}
+                    alt=""
+                  />{" "}
+                  <span>{item.product_Name}</span>
+                </td>
+                <td className=" px-4 py-2">{item.Price} DA</td>
+                <td className=" px-4 py-2">
+                  <input
+                    type="number"
+                    value={item.quantity || 1}
+                    onChange={(e) =>
+                      updateQuantity(item.product_ID, e.target.value)
+                    }
+                    className="w-16 border-2 text-center"
+                  />
+                </td>
+                <td className=" px-4 py-2">
+                  {item.Price * item.quantity || item.Price}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <>
+          <div className="p-16 flex items-center justify-center">
+            <h1 className="text-center font-bold text-xl ">
+              No Products in the Cart
+            </h1>
+          </div>
+        </>
+      )}
 
       <a
         href="/shop"
@@ -113,8 +129,10 @@ const Cart = () => {
       >
         Return to Shop
       </a>
-      <div className="flex items-center justify-between ">
-        <div className="flex items-center justify-between gap-1">
+      {cartItems.length > 0 &&
+<>
+      <div className="flex  justify-between ">
+        <div className="flex items-center justify-between gap-1 ">
           <input
             type="text"
             name="coupon"
@@ -124,7 +142,7 @@ const Cart = () => {
             Apply Coupon
           </button>
         </div>
-        <div className=" border-[1px] border-black p-4 ">
+        <div className=" border-[1px] border-black p-4  w-96 flex flex-col  justify-center">
           <h3 className="text-lg font-bold">Cart Total</h3>
 
           <p className="mb-2 flex justify-between">
@@ -132,19 +150,21 @@ const Cart = () => {
           </p>
           <hr className=" opacity-40 w-full border-black border-[1px]" />
           <p className="mb-2 flex justify-between">
-            <span>Shipping:</span> <span>{deliveryPrice || 0} DA</span>{" "}
+            <span>Shipping:</span> <span>{deliveryPrice} DA</span>{" "}
           </p>
           <hr className=" opacity-40 w-full  border-black border-[1px]" />
           <p className="font-bold flex justify-between">
             <span>Total:</span>{" "}
-            <span>{calculateTotalPrice() + deliveryPrice || 0} DA</span>
+            <span>{calculateTotalPrice() + deliveryPrice} DA</span>
           </p>
-          <button className="mt-4 text-center  text-white font-semibold bg-[#DB4444] p-2 border-[1px] border-[#DB4444] text-base">
+          <button className="mt-4 text-center mx-16  text-white font-semibold bg-[#DB4444] p-2 border-[1px] border-[#DB4444] text-base">
             Procees to checkout
           </button>
         </div>
       </div>
+      </>}
     </div>
+   
   );
 };
 

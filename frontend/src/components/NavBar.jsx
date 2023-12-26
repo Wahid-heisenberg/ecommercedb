@@ -6,7 +6,8 @@ import CartIcon from "../assets/CartIcon";
 import { CartContext } from "../Context/CartContext";
 import { useContext } from "react";
 const NavBar = () => {
-  const CartItems = JSON.parse(localStorage.getItem("cart")).length
+  const cart = JSON.parse(localStorage.getItem("cart"));
+const CartItems = cart ? cart.length : 0;
   return (
     <nav className="bg-white border-black border-[1px] border-opacity-30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -61,7 +62,7 @@ const NavBar = () => {
               </div>
               <div className="flex items-center justify-between relative">
                 <CartIcon className="w-6 h-6 " />
-                { CartItems &&
+                { CartItems >0 &&
                 <div className="absolute top-[-2px] right-[-6px] bg-[#DB4444] rounded-full w-4 h-4 flex items-center justify-center text-white text-xs font-bold">
                 { CartItems }
                 </div>

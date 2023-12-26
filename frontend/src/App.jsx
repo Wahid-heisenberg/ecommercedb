@@ -5,6 +5,7 @@ import ProductCart from './components/ProductCart'
 import { useEffect } from 'react';
 import axios from 'axios';
 import Cart from './components/Cart';
+import Product from './components/Product';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -39,7 +40,8 @@ function App() {
       </div>
       )} */}
 
-      <Cart/>
+      {/* <Cart/> */}
+      <Product related={<ProductCart  products={products} />}/>
     </div>
   );
 }

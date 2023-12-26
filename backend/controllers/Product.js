@@ -133,26 +133,60 @@ export const ShowProductsByIds = (req, res) => {
     console.log(error);
   }
 };
-export const ShowProduct = (req, res) => {
+// export const ShowProduct = (req, res) => {
+//   try {
+//     if (!req.params.id) {
+//       return res.status(400).json("Please provide the required product.");
+//     }
+//     const q = `
+// SELECT * FROM Products JOIN Product_Images ON Products.ProductID = Product_Images.Product_ID WHERE Products.ProductID = ?
+//   `;
+
+//     db.query(q, [req.params.id], (err, data) => {
+//       if (err) return res.status(500).json(err);
+//       if (data.length === 0)
+//         return res.status(200).json("There is no Product!");
+
+//       return res.status(200).json(organizeProducts(data));
+//     });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
+export const ShowProduct = async (req, res) => {
+  const productId = req.params.id;
+
+  const q1 = `
+    SELECT Products.*, AVG(Ratings.Stars_Number) as AverageStars
+    FROM Products 
+    LEFT JOIN Ratings ON Products.ProductID = Ratings.Product_ID
+    WHERE Products.ProductID = ?
+    GROUP BY Products.ProductID
+  `;
+
+  const q2 = `
+    SELECT Product_Images.*
+    FROM Product_Images
+    WHERE Product_Images.Product_ID = ?
+  `;
+
   try {
-    if (!req.params.id) {
-      return res.status(400).json("Please provide the required product.");
+    const [productData] = await db.promise().query(q1, [productId]);
+    const [imageData] = await db.promise().query(q2, [productId]);
+
+    if (productData.length === 0) {
+      return res.status(404).json({ message: "Product not found" });
     }
-    const q = "SELECT * FROM Products JOIN Product_Images ON Products.ProductID = Product_Images.Product_ID WHERE Products.ProductID = ?";
 
-    db.query(q, [req.params.id], (err, data) => {
-      if (err) return res.status(500).json(err);
-      if (data.length === 0)
-        return res.status(200).json("There is no Product!");
+    const product = productData[0];
+    product.images = imageData;
 
-      return res.status(200).json(organizeProducts(data));
-    });
-  } catch (error) {
-    console.log(error);
+    return res.status(200).json(product);
+  } catch (err) {
+    return res.status(500).json({ message: "An error occurred", error: err });
   }
 };
-
-
 
 export const UpdateProduct = async (req, res) => {
   try {
