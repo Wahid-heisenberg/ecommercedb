@@ -2,8 +2,15 @@
 export default {
   content: [],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        whitePrimary: "#FFFFFF",
+        blackPrimary: "#363738",
+        whiteText: "#FAFAFA",
+        grayText: "7D8184",
+        Dark: "000000",
+      },
+    },
   },
   plugins: [],
-}
-
+};

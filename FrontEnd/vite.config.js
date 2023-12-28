@@ -12,6 +12,7 @@ export default defineConfig({
       "@/pages": path.resolve("src/pages"),
       "@/layouts": path.resolve("src/layouts"),
       "@/routes": path.resolve("src/routes"),
+      "@/components": path.resolve("src/components"),
     },
   },
   plugins: [react()],
