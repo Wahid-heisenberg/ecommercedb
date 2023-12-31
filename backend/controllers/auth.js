@@ -9,15 +9,15 @@ export const register = (req, res) => {
   try {
     // console.log(req.body);
     
-    if (!req.body.Username || !req.body.User_Password || !req.body.Confirm_Password)
+    if (!req.body.Username || !req.body.Password || !req.body.Confirm_Password)
       return res.status(400).json("Please fill all fields.");
 
-    if (req.body.User_Password.length < 6 || req.body.Confirm_Password.length < 6)
+    if (req.body.Password.length < 6 || req.body.Confirm_Password.length < 6)
       return res
         .status(400)
         .json("Password should contain more than 6 caracters.");
 
-    if (req.body.User_Password !== req.body.Confirm_Password)
+    if (req.body.Password !== req.body.Confirm_Password)
       return res.status(400).json("Passwords don't match.");
     //Check if user exists
     const q = "SELECT * FROM users WHERE  Username = ?";
@@ -29,9 +29,9 @@ export const register = (req, res) => {
       //Hash the password and create a user
 
       const salt = bcrypt.genSaltSync(10);
-      const hash = bcrypt.hashSync(req.body.User_Password, salt);
+      const hash = bcrypt.hashSync(req.body.Password, salt);
 
-      const q = "INSERT INTO Users(`Username`,`User_Password`) VALUES (?)";
+      const q = "INSERT INTO Users(`Username`,`Password`) VALUES (?)";
       const values = [req.body.Username, hash];
 
       db.query(q, [values], (err, data) => {
@@ -47,10 +47,10 @@ export const register = (req, res) => {
 export const login = (req, res) => {
   try {
 
-    if (!req.body.Username || !req.body.User_Password)
+    if (!req.body.Username || !req.body.Password)
       return res.status(400).json("Please fill all fields.");
 
-    if (req.body.User_Password.length < 6)
+    if (req.body.Password.length < 6)
       return res
         .status(400)
         .json("Password should contain more than 6 caracters.");
@@ -63,8 +63,8 @@ export const login = (req, res) => {
 
       //Check password
       const isPasswordCorrect = bcrypt.compareSync(
-        req.body.User_Password,
-        data[0].User_Password
+        req.body.Password,
+        data[0].Password
       );
 
       if (!isPasswordCorrect)
@@ -78,7 +78,7 @@ export const login = (req, res) => {
           process.env.JwT_SECRET,
               {expiresIn:"7d"}
           );
-      const { User_Password, ...other } = data[0];
+      const { Password, ...other } = data[0];
 
       res
         .cookie("access_token", accessToken, {

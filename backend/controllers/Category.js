@@ -62,14 +62,14 @@ export const ShowCategoriesWithDetails = (req, res) => {
 };
 export const ShowCategories = (req, res) => {
   try {
-    const q = `SELECT * FROM categories `;
+    const q = `SELECT * FROM category `;
 
     db.query(q, (err, data) => {
       if (err) return res.status(500).json(err);
-      if (data.length === 0)
-        return res.status(200).json("There is no Categories!");
+      // if (data.length === 0)
+      //   return res.status(200).json("There is no Categories!");
 
-      return res.status(200).json(data);
+      return res.status(200).json({categories: data});
     });
   } catch (error) {
     console.log(error);
