@@ -1,14 +1,17 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [],
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
   theme: {
     extend: {
       colors: {
-        whitePrimary: "#FFFFFF",
         blackPrimary: "#363738",
         whiteText: "#FAFAFA",
-        grayText: "7D8184",
-        Dark: "000000",
+        grayText: "#7D8184",
+        Dark: "#000000",
+        input:"#F5F5F5"
       },
     },
   },
