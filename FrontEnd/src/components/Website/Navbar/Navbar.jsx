@@ -33,7 +33,7 @@ const Navbar = () => {
                         ? "text-blackPrimary font-medium"
                         : isActive
                         ? "border-b-2 border-red-400"
-                        : ""
+                        : "hover:font-bold transition-all duration-300"
                     }
                   >
                     {link.name}
@@ -43,28 +43,24 @@ const Navbar = () => {
             </ul>
           </nav>
 
-          {location !== "/login" && location !== "/signUp"  ? (
-            <div className="flex gap-4">
-              <div className="flex relative">
-                <input
-                  type="text "
-                  className="bg-input w-60 pl-3 pr-10 h-9 rounded-md outline-none text-[13px]"
-                  placeholder="What are you looking for?"
-                />
-                <SearchIcon className="absolute h-9 p-0.5 right-2 cursor-pointer" />
-              </div>
-
-              <button>
-                <Favorite className="stroke-black hover:stroke-red-500" />
-              </button>
-
-              <button>
-                <Cart className="stroke-black hover:stroke-red-500" />
-              </button>
+          <div className="flex gap-4">
+            <div className="flex relative">
+              <input
+                type="text "
+                className="bg-input w-60 pl-3 pr-10 h-9 rounded-md outline-none text-[13px]"
+                placeholder="What are you looking for?"
+              />
+              <SearchIcon className="absolute h-9 p-0.5 right-2 cursor-pointer" />
             </div>
-          ) : (
-            ""
-          )}
+
+            <button>
+              <Favorite className="stroke-black hover:stroke-red-500" />
+            </button>
+
+            <button>
+              <Cart className="stroke-black hover:stroke-red-500" />
+            </button>
+          </div>
         </div>
       </header>
     </>
