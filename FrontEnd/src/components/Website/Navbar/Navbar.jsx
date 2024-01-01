@@ -12,7 +12,6 @@ const Navbar = () => {
     { name: "Sign Up", path: "/signUp" },
   ];
   const location = useLocation().pathname;
-  console.log(location);
 
   return (
     <>
