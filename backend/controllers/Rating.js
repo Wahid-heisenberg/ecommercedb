@@ -47,7 +47,7 @@ export const createRating = (req, res) => {
 
 // Function to get the average stars number and comments for each product
 export const getAverageRating = (req, res) => {
-    const query = 'SELECT r.Product_ID, AVG(r.Stars_Number) AS Average_Stars, GROUP_CONCAT(CONCAT(u.Username, ": ", r.User_Comment)) AS Comments FROM ratings r JOIN users u ON r.User_ID = u.User_ID GROUP BY r.Product_ID';
+    const query = 'SELECT r.Product_ID, AVG(r.Stars_Number) AS Average_Stars, GROUP_CONCAT(CONCAT(u.Username, ": ", r.User_Comment)SEPARATOR "$$$") AS Comments FROM ratings r JOIN users u ON r.User_ID = u.User_ID GROUP BY r.Product_ID';
     
     db.query(query, (error, results) => {
         if (error) {
