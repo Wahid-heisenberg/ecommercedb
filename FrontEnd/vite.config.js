@@ -14,7 +14,10 @@ export default defineConfig({
       "@/layouts": path.resolve("src/layouts"),
       "@/routes": path.resolve("src/routes"),
       "@/components": path.resolve("src/components"),
-      "@/assets":path.resolve("src/assets")
+      "@/icons":path.resolve("src/assets/svg"),
+      "@/images":path.resolve("src/assets/img"),
+      "@/ui":path.resolve("src/components/ui")
+
     },
   },
   plugins: [react(),svgr()],

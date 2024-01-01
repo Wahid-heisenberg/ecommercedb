@@ -1,15 +1,15 @@
 import React from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import SearchIcon from "@/assets/svg/searchIcon.svg?react";
-import Favorite from "@/assets/svg/Wishlist.svg?react";
-import Cart from "@/assets/svg/cart.svg?react";
+import SearchIcon from "@/icons/searchIcon.svg?react";
+import Favorite from "@/icons/Wishlist.svg?react";
+import Cart from "@/icons/cart.svg?react";
 
 const Navbar = () => {
   const links = [
     { name: "Home", path: "/" },
-    { name: "Contact", path: "contact" },
-    { name: "About", path: "about" },
-    { name: "Sign Up", path: "sign up" },
+    { name: "Contact", path: "/contact" },
+    { name: "About", path: "/about" },
+    { name: "Sign Up", path: "/signUp" },
   ];
   const location = useLocation().pathname;
   console.log(location);
@@ -43,7 +43,7 @@ const Navbar = () => {
             </ul>
           </nav>
 
-          {location !== "/login" ? (
+          {location !== "/login" && location !== "/signUp"  ? (
             <div className="flex gap-4">
               <div className="flex relative">
                 <input

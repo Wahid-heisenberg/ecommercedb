@@ -11,7 +11,8 @@ export default {
         whiteText: "#FAFAFA",
         grayText: "#7D8184",
         Dark: "#000000",
-        input:"#F5F5F5"
+        input:"#F5F5F5",
+        bgButton:"#DB4444"
       },
     },
   },
