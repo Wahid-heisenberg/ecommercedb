@@ -76,7 +76,6 @@ export const CreateProduct = async (req, res) => {
 
 export const ShowProducts = (req, res) => {
   try {
-    console.log(req.query.page);
     const page = req.query.page || 1; // Default to page 1 if not specified
     const itemsPerPage = 8;
 
@@ -262,7 +261,6 @@ export const UpdateProduct = async (req, res) => {
     const { Sub_Category_ID, Category_ID} = req.query;
     const images = req.files;
 
-    console.log()
 
     // Convert db.query into a function that returns a Promise
     const dbQuery = (query, values) => {

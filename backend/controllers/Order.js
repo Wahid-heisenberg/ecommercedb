@@ -44,7 +44,7 @@ export const CreateOrder = async (req, res) => {
 
     // Create the order in the Orders table
     const createOrderQuery = `
-            INSERT INTO Orders (Order_Date, Client_ID)
+            INSERT INTO orders (Order_Date, Client_ID)
             VALUES (?, ?);
         `;
     await db.promise().query(createOrderQuery, [Order_Date, Client_ID]);
@@ -58,7 +58,7 @@ export const CreateOrder = async (req, res) => {
 
     // Create the order products in the Order_Products table
     const orderProductsQuery = `
-            INSERT INTO Order_Products (Product_ID, Quantity, Order_ID)
+            INSERT INTO order_products (Product_ID, Quantity, Order_ID)
             VALUES ${Order_Products.map(
               (product) =>
                 `(${product.Product_ID}, ${product.Quantity}, ${orderID})`

@@ -15,23 +15,20 @@ export  const verifyToken = (req, res, next) => {
 };
 
 export  const verifyTokenAndAuthorization = (req, res, next) => {
-  verifyToken(req, res, () => {
-    if (req.user.id === req.params.id || req.user.Is_Admin) {
+  console.log(req.user)
+    if (req.user.id === req.params.id || req.user.id === req.body.Client_ID || req.user.Is_Admin) {
       next();
-    } else {
+    }else{
       res.status(403).json("You are not alowed to do that!");
-    }
-  });
-};
+}};
 
 export const verifyTokenAndAdmin = (req, res, next) => {
-  verifyToken(req, res, () => {
     if (req.user.Is_Admin) {
       next();
     } else {
       res.status(403).json("You are not alowed to do that!");
     }
-  });
+  ;
 };
 
 

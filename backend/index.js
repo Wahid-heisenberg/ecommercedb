@@ -8,7 +8,7 @@ import SubCategoryRoutes from "./routes/SubCategory.js";
 import ProductRoutes from "./routes/Product.js";
 import OrderRoutes from './routes/Order.js'
 import RatingRoutes from './routes/Rating.js'
-dotenv.config();
+
 
 const app = express();
 app.use(cors());

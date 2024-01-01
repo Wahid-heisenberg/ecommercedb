@@ -2,7 +2,7 @@ import { db } from "../db.js";
 
 // Function to create a new rating
 export const createRating = (req, res) => {
-    const  User_ID  = req.params.userId ;
+    const  User_ID  = req.params.id ;
     const  Product_ID = req.params.productId
 
     console.log(Product_ID)
