@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Title, Button } from "@/ui";
+import { Title, Button, Promotions } from "@/ui";
 
 import { PRODUCTS } from "@/config/config";
 import { ProductCard, Rating } from "@/components/ui";
+
+import Playstation from "@/images/playstation.png";
+import Collection from "@/images/collection.png";
+import Speakers from "@/images/speakers.png";
+import Perfume from "@/images/perfume.png";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -46,6 +51,45 @@ const Home = () => {
 
           <div className="flex justify-center mt-10">
             <Button>View All Products</Button>
+          </div>
+        </div>
+      </section>
+
+      <section id="promotion" className="c-container py-16 ">
+        <Title>Featured</Title>
+        <h1 className="font-bold text-xl mt-3">Promotions</h1>
+
+        <div className="grid grid-cols-2 gap-3">
+          <Promotions
+            image={Playstation}
+            title={"Playstation 5"}
+            text={"Black and White version of the PS5 coming out on sale."}
+          />
+
+          <div className="grid grid-rows-2 gap-2">
+            <Promotions
+              image={Collection}
+              title={"Women’s Collections"}
+              text={"Featured woman collections that give you another vibe."}
+              
+            />
+            <div className="grid grid-cols-2 gap-2" >
+
+            <Promotions
+              image={Speakers}
+              title={"Speakers"}
+              text={"Amazon wireless speakers"}
+              
+            />
+            <Promotions
+              image={Perfume}
+              title={"Perfume"}
+              text={"GUCCI INTENSE OUD EDP"}
+              
+            />
+
+            
+            </div>
           </div>
         </div>
       </section>
