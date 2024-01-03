@@ -50,3 +50,9 @@ export const PRODUCTS = [
     totalRatings: 70,
   },
 ];
+
+export const Category= [
+  {
+    Name:,
+  }
+]
