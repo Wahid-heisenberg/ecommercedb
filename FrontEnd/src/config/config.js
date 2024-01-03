@@ -53,6 +53,16 @@ export const PRODUCTS = [
 
 export const Category= [
   {
-    Name:,
+    Category_ID:1,
+    Name:"Phones",
+    image:"",
   }
 ]
+
+
+// CREATE TABLE `categories` (
+//   `Category_ID` int(11) NOT NULL,
+//   `Name` varchar(40) DEFAULT NULL,
+//   `Description` varchar(150) DEFAULT NULL,
+//   `Image` varchar(150) DEFAULT NULL
+// )
