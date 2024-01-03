@@ -8,10 +8,10 @@ import Playstation from "@/images/playstation.png";
 import Collection from "@/images/collection.png";
 import Speakers from "@/images/speakers.png";
 import Perfume from "@/images/perfume.png";
+import { Categories } from "@/components/home/Categories";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
-  const [category, setCategory] = useState([]);
 
   const getProduct = async () => {
     try {
@@ -25,21 +25,10 @@ const Home = () => {
     }
   };
 
-  const getCategory = async () => {
-    try {
-      const response = await fetch("/");
-      const data = await response.json();
-      setCategory(data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   useEffect(() => {
     setProducts(PRODUCTS);
 
     //getProduct()
-    //getCategory
   }, []);
 
   return (
@@ -70,6 +59,7 @@ const Home = () => {
       <section id="categories" className="c-container py-16 ">
         <Title>Categories</Title>
         <h1 className="font-bold text-xl mt-3">Browse By Category</h1>
+        <Categories />
       </section>
 
       <section id="promotion" className="c-container py-16 ">

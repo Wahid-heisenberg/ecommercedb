@@ -17,7 +17,8 @@ export default defineConfig({
       "@/icons":path.resolve("src/assets/svg"),
       "@/images":path.resolve("src/assets/img"),
       "@/ui":path.resolve("src/components/ui"),
-      "@/config":path.resolve("src/config")
+      "@/config":path.resolve("src/config"),
+
 
     },
   },
