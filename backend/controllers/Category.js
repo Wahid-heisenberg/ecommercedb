@@ -150,7 +150,7 @@ export const deleteCategory = (req, res) => {
 
 export const deleteALLCategories = (req, res) => {
   try {
-    const q = "DELETE FROM Categories";
+    const q = "DELETE * FROM Categories";
 
     db.query(q, (err, data) => {
       if (err) return res.status(500).json("Database error: " + err);

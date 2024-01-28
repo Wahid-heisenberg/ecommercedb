@@ -1,6 +1,7 @@
 import React, { useContext ,useEffect ,useState} from "react";
 import CartIcon from "../assets/CartIcon";
 import StarsRating from "./StarsRating.jsx";
+import { Link } from "react-router-dom";
 // import { CartContext } from "../Context/CartContext.jsx";
 // import { setAddedToCart } from "../Context/CartContext.jsx";
 
@@ -25,14 +26,18 @@ const ProductCart = ({ products }) => {
     
     return (
         
+        
         <div className="grid grid-cols-5  gap-4 p-16 ">
             {products.map((product) => (
+             
                 <div key={product.product_ID} className="flex flex-col relative">
+                    <Link exact='true' to={`http://localhost:5173/product/${product.product_ID}`} >
                     <img
                         src={product.Images[0].Image_URL.slice(18)}
                         alt="Product Image"
                         className="max-h-36"
                     />
+                    </Link>
                     {product.OldPrice > product.Price && (
                         <span className="absolute left-1 top-1 bg-[#DB4444] text-xs text-white rounded-sm py-1 px-2 font-semibold">
                             -{Math.ceil(
@@ -41,6 +46,7 @@ const ProductCart = ({ products }) => {
                             %
                         </span>
                     )}
+                    
                     <button
                         className={`flex items-center justify-center gap-2 p-1 text-white ${addedToCart &&
                             addedToCart.includes(product.product_ID)
@@ -79,6 +85,7 @@ const ProductCart = ({ products }) => {
                         <StarsRating rating={product.AverageStars} />
                     )}
                 </div>
+                
             ))}
         </div>
     );

@@ -7,6 +7,7 @@ dotenv.config();
 export const CreateOrder = async (req, res) => {
   try {
     const { Client_ID, Order_Products } = req.body;
+    console.log(req.body)
     const checkClientQuery = `
     SELECT User_ID FROM Users WHERE User_ID = ?;
 `;
